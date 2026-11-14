@@ -340,7 +340,7 @@ To create a hold, send seat IDs:
 }
 ```
 
-The response includes a `hold_id` and `expires_at`. Use that hold ID in the confirmation or release endpoint.
+The response includes a `hold_id` and `expires_at`. Use that hold ID in the confirmation or release endpoint. After confirmation, an administrator can check in the booking once through `POST /bookings/:id/redeem`.
 
 The showtime seats endpoint is public. Each seat includes a `status`: `available`, `held` (temporarily reserved in Redis), or `booked` (confirmed in PostgreSQL).
 
