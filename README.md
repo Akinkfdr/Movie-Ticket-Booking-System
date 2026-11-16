@@ -214,7 +214,7 @@ Newly registered accounts have the `user` role. There is no public admin-registr
 * PostgreSQL
 * Redis
 
-### 2. Create a PostgreSQL database and apply migrations
+### 2. Create a fresh PostgreSQL database and apply migrations
 
 The example environment files point to a local database named `database`. Create that database or update each service's `DATABASE_URL` to use an existing one. Apply the migrations in order:
 
