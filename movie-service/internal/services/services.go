@@ -199,3 +199,11 @@ func GetSeats(ctx context.Context, pool *pgxpool.Pool, showtimeID uuid.UUID) ([]
 
 	return seats, nil
 }
+
+func GetAuditoriums(ctx context.Context, pool *pgxpool.Pool) ([]models.Auditorium, error) {
+	auditoriums, err := repository.GetAuditoriums(ctx, pool)
+	if err != nil {
+		return []models.Auditorium{}, errors.New("internal server error")
+	}
+	return auditoriums, nil
+}

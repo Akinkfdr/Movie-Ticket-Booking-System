@@ -130,7 +130,7 @@ Responsible for:
 Responsible for:
 
 * Movie creation, browsing, and updates
-* Auditorium creation
+* Auditorium creation and listing
 * Showtime scheduling with auditorium overlap checks
 * Auditorium seat creation and showtime seat lookup
 * Admin-only movie, auditorium, showtime, and seat management
@@ -310,6 +310,7 @@ All client requests should go through `http://localhost:8080`.
 | `GET` | `/movies/:id/showtimes` | List a movie's showtimes |
 | `GET` | `/showtimes/:id` | Get showtime details |
 | `GET` | `/showtimes/:id/seats` | List showtime seats with availability status |
+| `GET` | `/auditoriums` | List auditoriums |
 
 ### Protected admin endpoints
 

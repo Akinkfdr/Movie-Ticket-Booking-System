@@ -190,6 +190,15 @@ const getSeatsByAuditoriumIDSQL = `
 	ORDER BY row_label, seat_number
 `
 
+const getAuditoriumsSQL = `
+	SELECT
+		id,
+		name,
+		created_at
+	FROM auditoriums
+	ORDER BY created_at DESC
+`
+
 func InsertMovie(ctx context.Context, pool *pgxpool.Pool, movie models.Movie) (models.Movie, error) {
 	var insertedMovie models.Movie
 	err := pool.QueryRow(
@@ -540,4 +549,36 @@ func GetSeatsByAuditoriumID(ctx context.Context, pool *pgxpool.Pool, auditoriumI
 	}
 
 	return seats, nil
+}
+
+func GetAuditoriums(ctx context.Context, pool *pgxpool.Pool) ([]models.Auditorium, error) {
+	rows, err := pool.Query(
+		ctx,
+		getAuditoriumsSQL,
+	)
+	if err != nil {
+		return []models.Auditorium{}, errors.New("internal server error")
+	}
+	defer rows.Close()
+
+	var auditoriums []models.Auditorium
+	for rows.Next() {
+		var auditorium models.Auditorium
+		err := rows.Scan(
+			&auditorium.ID,
+			&auditorium.Name,
+			&auditorium.CreatedAt,
+		)
+		if err != nil {
+			return []models.Auditorium{}, errors.New("internal server error")
+		}
+
+		auditoriums = append(auditoriums, auditorium)
+	}
+
+	if err := rows.Err(); err != nil {
+		return []models.Auditorium{}, errors.New("internal server error")
+	}
+
+	return auditoriums, nil
 }

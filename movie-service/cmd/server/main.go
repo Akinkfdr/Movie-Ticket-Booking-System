@@ -31,6 +31,7 @@ func main() {
 	router.GET("/showtimes/:id", handlers.GetShowtimeHandler(pool))
 	router.POST("/auditoriums/:id/seats", middlewares.AdminMiddleware(), handlers.CreateSeatsHandler(pool))
 	router.GET("/showtimes/:id/seats", handlers.GetSeatsHandler(pool))
+	router.GET("/auditoriums", handlers.GetAuditoriumsHandler(pool))
 
 	if err := router.Run(":8082"); err != nil {
 		log.Fatal(err)

@@ -33,6 +33,7 @@ func main() {
 	router.GET("/movies/:id", movieProxy)
 	router.GET("/movies/:id/showtimes", movieProxy)
 	router.GET("/showtimes/:id", movieProxy)
+	router.GET("/auditoriums", movieProxy)
 	router.GET("/showtimes/:id/seats", ticketProxy)
 
 	protected := router.Group("/")

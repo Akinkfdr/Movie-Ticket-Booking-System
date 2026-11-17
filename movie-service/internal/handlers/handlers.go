@@ -303,3 +303,19 @@ func GetShowtimeHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, showtime)
 	}
 }
+
+func GetAuditoriumsHandler(pool *pgxpool.Pool) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		auditoriums, err := services.GetAuditoriums(ctx.Request.Context(), pool)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+			return
+		}
+
+		if auditoriums == nil {
+			auditoriums = []models.Auditorium{}
+		}
+
+		ctx.JSON(http.StatusOK, auditoriums)
+	}
+}
