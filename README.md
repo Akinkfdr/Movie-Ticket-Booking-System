@@ -133,7 +133,7 @@ Responsible for:
 * Auditorium creation and listing
 * Showtime scheduling with auditorium overlap checks
 * Auditorium seat creation and showtime seat lookup
-* Admin-only movie, auditorium, showtime, and seat management
+* Admin-only movie, auditorium, showtime creation, and seat management
 
 ### Ticket Service
 
