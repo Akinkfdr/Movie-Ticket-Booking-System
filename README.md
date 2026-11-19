@@ -333,7 +333,7 @@ All client requests should go through `http://localhost:8080`.
 | `GET` | `/bookings/:id` | Get one of the authenticated user's bookings |
 | `GET` | `/users/me/bookings` | List the authenticated user's bookings |
 
-To create a hold, send seat IDs:
+Create a hold by sending seat IDs in the request body:
 
 ```json
 {
@@ -341,7 +341,7 @@ To create a hold, send seat IDs:
 }
 ```
 
-The response includes a `hold_id` and `expires_at`. Use that hold ID in the confirmation or release endpoint. After confirmation, an administrator can check in the booking once through `POST /bookings/:id/redeem`.
+The response includes a `hold_id` and `expires_at`. Pass the `hold_id` to the confirm or release endpoint. After confirmation, an administrator can check in the booking once through `POST /bookings/:id/redeem`.
 
 The showtime seats endpoint is public. Each seat includes a `status`: `available`, `held` (temporarily reserved in Redis), or `booked` (confirmed in PostgreSQL).
 
