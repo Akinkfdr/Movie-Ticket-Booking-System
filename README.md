@@ -60,7 +60,7 @@ sequenceDiagram
     Gateway->>Ticket: Forward authenticated confirmation
     Ticket->>Redis: Verify hold owner and held seats
     Ticket->>Movie: Read showtime price
-    Ticket->>DB: Insert booking and booking seats in a transaction
+    Ticket->>DB: Insert booking and booking_seat rows in a transaction
     Ticket->>Redis: Release hold keys
     Ticket-->>User: Confirmed booking
 
