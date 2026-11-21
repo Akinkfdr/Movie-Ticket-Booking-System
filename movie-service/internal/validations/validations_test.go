@@ -47,6 +47,17 @@ func TestValidateCreateSeatsRejectsEmptyAndDuplicateSeats(t *testing.T) {
 	}
 }
 
+func TestValidateCreateSeatsRequestAcceptsSameNumberInDifferentRows(t *testing.T) {
+	seats := []models.CreateSeatRequest{
+		{RowLabel: "A", SeatNumber: 1},
+		{RowLabel: "B", SeatNumber: 1},
+		{RowLabel: "A", SeatNumber: 2},
+	}
+	if err := ValidateCreateSeatsRequest(seats); err != nil {
+		t.Fatalf("expected seats in different rows to be accepted, got error: %v", err)
+	}
+}
+
 func TestValidateAddMovieRequestAcceptsValidRequest(t *testing.T) {
 	req := models.AddMovieRequest{
 		Title:           "Example Film",
