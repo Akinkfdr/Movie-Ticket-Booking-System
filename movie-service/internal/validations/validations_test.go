@@ -140,3 +140,12 @@ func TestValidateCreateSeatsRejectsInvalidSeatFields(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateCreateSeatsRequestAcceptsMaximumRowLabelLength(t *testing.T) {
+	seats := []models.CreateSeatRequest{
+		{RowLabel: strings.Repeat("A", 128), SeatNumber: 1},
+	}
+	if err := ValidateCreateSeatsRequest(seats); err != nil {
+		t.Fatalf("expected 128-character row label to be accepted, got error: %v", err)
+	}
+}
