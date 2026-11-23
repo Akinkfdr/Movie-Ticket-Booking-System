@@ -23,6 +23,33 @@ func TestValidateAddMovieRequestRejectsInvalidInput(t *testing.T) {
 	}
 }
 
+func TestValidateAddMovieRequestRejectsMalformedReleaseDate(t *testing.T) {
+	tests := []struct {
+		name string
+		date string
+	}{
+		{name: "day first slashes", date: "01/01/2020"},
+		{name: "month first slashes", date: "12/31/2020"},
+		{name: "no separators", date: "20200101"},
+		{name: "text", date: "not-a-date"},
+		{name: "empty", date: ""},
+		{name: "with time", date: "2020-01-01T00:00:00Z"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req := models.AddMovieRequest{
+				Title:           "Film",
+				Description:     "A description",
+				DurationMinutes: 90,
+				ReleaseDate:     tt.date,
+			}
+			if err := ValidateAddMovieRequest(req); err == nil {
+				t.Fatalf("expected validation error for release date %q", tt.date)
+			}
+		})
+	}
+}
+
 func TestValidateAddShowtimeRequestRejectsInvalidInput(t *testing.T) {
 	validFuture := time.Now().Add(time.Hour)
 	tests := []models.AddShowtimeRequest{
