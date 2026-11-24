@@ -25,6 +25,13 @@ func TestValidateCreateHoldRequestRejectsInvalidBatches(t *testing.T) {
 	}
 }
 
+func TestValidateCreateHoldRequestAcceptsSingleSeat(t *testing.T) {
+	req := models.CreateHoldRequest{SeatIDs: []uuid.UUID{uuid.New()}}
+	if err := ValidateCreateHoldRequest(req); err != nil {
+		t.Fatalf("expected single-seat hold request to be accepted, got error: %v", err)
+	}
+}
+
 func TestValidateCreateHoldRequestAcceptsMaximumBatch(t *testing.T) {
 	seatIDs := make([]uuid.UUID, 500)
 	for i := range seatIDs {
