@@ -25,6 +25,26 @@ func TestValidateCreateHoldRequestRejectsInvalidBatches(t *testing.T) {
 	}
 }
 
+func TestValidateCreateHoldRequestRejectsNonAdjacentDuplicateSeat(t *testing.T) {
+	a, b, c := uuid.New(), uuid.New(), uuid.New()
+	tests := []struct {
+		name string
+		ids  []uuid.UUID
+	}{
+		{"one apart", []uuid.UUID{a, b, a}},
+		{"first and last", []uuid.UUID{a, b, c, a}},
+		{"duplicate at end", []uuid.UUID{a, b, c, c}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req := models.CreateHoldRequest{SeatIDs: tt.ids}
+			if err := ValidateCreateHoldRequest(req); err == nil {
+				t.Fatal("expected validation error for duplicate seat")
+			}
+		})
+	}
+}
+
 func TestValidateCreateHoldRequestAcceptsSingleSeat(t *testing.T) {
 	req := models.CreateHoldRequest{SeatIDs: []uuid.UUID{uuid.New()}}
 	if err := ValidateCreateHoldRequest(req); err != nil {
